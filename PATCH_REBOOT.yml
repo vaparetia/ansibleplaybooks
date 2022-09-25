@@ -10,7 +10,7 @@
         register: patchresult
       
       - name: Update Flatpaks
-        shell: "flatpak update"
+        shell: "flatpak update -y"
         register: patchresult
       
       - name: Reboot the server
@@ -26,7 +26,7 @@
           port: 22
           host: '{{ (ansible_ssh_host|default(ansible_host))|default(inventory_hostname) }}'
           search_regex: OpenSSH
-          delay: 10
+          delay: 60
           timeout: 120
         connection: local
 

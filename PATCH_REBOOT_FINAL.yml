@@ -10,7 +10,7 @@
         register: patchresult
       
       - name: Update Flatpaks
-        shell: "flatpak update"
+        shell: "flatpak update -y"
         register: patchresult
       
       - name: Reboot the server
