@@ -1,0 +1,31 @@
+---
+
+- hosts: workstations
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Install RPMS
+      dnf:
+       pkg:
+        - btop
+        - gnome-tweaks
+        - steam
+        - wine
+        - winetricks
+        - lutris
+        - akmod-nvidia
+        - '@Virtualization'
+       state: latest
+    - name: Install Flatpaks
+      community.general.flatpak:
+        name:
+          - com.github.tchx84.Flatseal
+          - com.spotify.Client
+          - com.bitwarden.desktop
+          - com.mattjakeman.ExtensionManager
+    - name:
+      ansible.builtin.shell:
+        flatpak list
+      register: patchresult
+
+    - debug: var=patchresult

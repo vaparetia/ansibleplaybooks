@@ -1,0 +1,5 @@
+---
+- import_playbook: PATCH_REBOOT.yml
+- import_playbook: DNF_BASH_SETTINGS.yml
+- import_playbook: INSTALL_DEFAULT.yml
+- import_playbook: PATCH_REBOOT_FINAL.yml

@@ -1,0 +1,33 @@
+---
+
+- hosts: workstations
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: Disable CPU Mitigations
+    ansible.builtin.shell: sed -i 's/GRUB_CMDLINE_LINUX="[^"]*/& mitigations=off/' /etc/default/grub
+  - name: Update Grub Config
+    ansible.builtin.shell: grub2-mkconfig -o /etc/grub2-efi.cfg
+  - name: DNF Optimizations
+    ansible.builtin.shell:
+      echo 'fastestmirror=1' | tee -a /etc/dnf/dnf.conf
+      echo 'max_parallel_downloads=10' | tee -a /etc/dnf/dnf.conf
+      echo 'deltarpm=true' | tee -a /etc/dnf/dnf.conf
+  - name: make the bashrc theme file
+    ansible.builtin.shell: 
+      touch /etc/profile.d/bashrc_theme.sh
+  - name: make the bashrc theme file executable
+    ansible.builtin.shell: 
+      chmod +x /etc/profile.d/bashrc_theme.sh
+  - name: Putting settings into bashrc theme file
+    ansible.builtin.shell: 
+      echo 'export PS1="\[$(tput bold)\]\[\033[38;5;11m\]\u\[$(tput sgr0)\]@\[$(tput sgr0)\]\[$(tput bold)\]\[\033[38;5;9m\]\h\[$(tput sgr0)\]\[\033[38;5;251m\](\[$(tput sgr0)\]\[$(tput bold)\]\[\033[38;5;41m\]\w\[$(tput sgr0)\]\[\033[38;5;252m\])\[$(tput sgr0)\]\[$(tput bold)\]\[\033[38;5;14m\]\\$\[$(tput sgr0)\]"' >> /etc/profile.d/bashrc_theme.sh
+  - name: Setting up DNF RPM FUSION repositories
+    ansible.builtin.shell:
+      sudo dnf -y install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+  - name: Appstream for RPM FUSION
+    ansible.builtin.shell:
+      sudo dnf -y group update core
+  - name: Enable Flathub Repositories
+    ansible.builtin.shell:
+      flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo

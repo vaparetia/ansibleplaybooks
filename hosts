@@ -1,0 +1,5 @@
+[pis]
+192.168.1.38 ansible_user=pi
+
+[workstations]
+192.168.2.8 ansible_user=schuyler
