@@ -22,6 +22,10 @@
   - name: Putting settings into bashrc theme file
     ansible.builtin.shell: 
       echo 'export PS1="\[$(tput bold)\]\[\033[38;5;11m\]\u\[$(tput sgr0)\]@\[$(tput sgr0)\]\[$(tput bold)\]\[\033[38;5;9m\]\h\[$(tput sgr0)\]\[\033[38;5;251m\](\[$(tput sgr0)\]\[$(tput bold)\]\[\033[38;5;41m\]\w\[$(tput sgr0)\]\[\033[38;5;252m\])\[$(tput sgr0)\]\[$(tput bold)\]\[\033[38;5;14m\]\\$\[$(tput sgr0)\]"' >> /etc/profile.d/bashrc_theme.sh
+  - name: Visual Studio Code Repository
+    ansible.builtin.shell:
+      sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+      sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
   - name: Setting up DNF RPM FUSION repositories
     ansible.builtin.shell:
       sudo dnf -y install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm

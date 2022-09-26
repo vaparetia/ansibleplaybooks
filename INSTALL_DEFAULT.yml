@@ -14,6 +14,7 @@
         - winetricks
         - lutris
         - akmod-nvidia
+        - code
         - '@Virtualization'
        state: latest
     - name: Install Flatpaks
