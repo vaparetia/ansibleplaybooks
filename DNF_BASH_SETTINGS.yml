@@ -8,10 +8,14 @@
     ansible.builtin.shell: sed -i 's/GRUB_CMDLINE_LINUX="[^"]*/& mitigations=off/' /etc/default/grub
   - name: Update Grub Config
     ansible.builtin.shell: grub2-mkconfig -o /etc/grub2-efi.cfg
-  - name: DNF Optimizations
+  - name: DNF Optimizations "Fastestmirror"
     ansible.builtin.shell:
       echo 'fastestmirror=1' | tee -a /etc/dnf/dnf.conf
+  - name: DNF Optimizations "Max Downloads=10"
+    ansible.builtin.shell:
       echo 'max_parallel_downloads=10' | tee -a /etc/dnf/dnf.conf
+  - name: DNF Optimizations "Enable Deltarpm"
+    ansible.builtin.shell:
       echo 'deltarpm=true' | tee -a /etc/dnf/dnf.conf
   - name: make the bashrc theme file
     ansible.builtin.shell: 
@@ -22,9 +26,11 @@
   - name: Putting settings into bashrc theme file
     ansible.builtin.shell: 
       echo 'export PS1="\[$(tput bold)\]\[\033[38;5;11m\]\u\[$(tput sgr0)\]@\[$(tput sgr0)\]\[$(tput bold)\]\[\033[38;5;9m\]\h\[$(tput sgr0)\]\[\033[38;5;251m\](\[$(tput sgr0)\]\[$(tput bold)\]\[\033[38;5;41m\]\w\[$(tput sgr0)\]\[\033[38;5;252m\])\[$(tput sgr0)\]\[$(tput bold)\]\[\033[38;5;14m\]\\$\[$(tput sgr0)\]"' >> /etc/profile.d/bashrc_theme.sh
-  - name: Visual Studio Code Repository
+  - name: Visual Studio Code Repository "Keys"
     ansible.builtin.shell:
       sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+  - name: Visual Studio Code Repository
+    ansible.builtin.shell:
       sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
   - name: Setting up DNF RPM FUSION repositories
     ansible.builtin.shell:
