@@ -25,7 +25,7 @@ firstboot --disable
 
 # Generated using Blivet version 3.4.3
 ignoredisk --only-use=nvme0n1
-autopart
+autopart --type=btrfs
 # Partition clearing information
 clearpart --all --drives=nvme0n1
 
