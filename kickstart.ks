@@ -31,9 +31,10 @@ clearpart --all --drives=$
 # System timezone - Change This for your region
 timezone America/Chicago
 
+#Open SSH port for Ansible
+firewall --enabled --ssh
+
 #Root password
 rootpw --lock
 # $ = username * = password hash
 user --groups=wheel --name=$ --password=* --iscrypted --gecos="$"
-#Open SSH port for Ansible
-firewall --enabled --ssh
