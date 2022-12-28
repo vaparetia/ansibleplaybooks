@@ -37,6 +37,12 @@
   - name: Setting up DNF RPM FUSION repositories
     ansible.builtin.shell:
       sudo dnf -y install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+  - name: Setting up Freeworld Mesa vaapi for AMD GPUs
+    ansible.builtin.shell:
+      sudo dnf -y swap --enablerepo=rpmfusion-free-updates-testing mesa-va-drivers mesa-va-drivers-freeworld
+  - name: Setting up Freeworld Mesa vdpau for NVIDIA GPUs
+    ansible.builtin.shell:
+      sudo dnf -y swap --enablerepo=rpmfusion-free-updates-testing mesa-vdpau-drivers mesa-vdpau-drivers-freeworld
   - name: Appstream for RPM FUSION
     ansible.builtin.shell:
       sudo dnf -y group update core
