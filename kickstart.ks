@@ -19,6 +19,8 @@ lang en_US.UTF-8
 @^workstation-product-environment
 
 %end
+# Randomize hostname for deployment
+echo "network --hostname=`echo $RANDOM.domain.test`" > /tmp/pre-hostname
 
 # Run the Setup Agent on first boot
 firstboot --disable
